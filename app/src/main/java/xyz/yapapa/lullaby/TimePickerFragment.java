@@ -1,4 +1,4 @@
-package com.yamilab.lullababy;
+package xyz.yapapa.lullaby;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

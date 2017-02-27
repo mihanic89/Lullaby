@@ -1,37 +1,37 @@
 package xyz.yapapa.lullaby;
 
-        import android.animation.ObjectAnimator;
-        import android.app.ActivityManager;
-        import android.app.DialogFragment;
-        import android.content.ComponentName;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.ServiceConnection;
-        import android.content.SharedPreferences;
-        import android.content.res.Resources;
-        import android.os.Bundle;
-        import android.os.CountDownTimer;
-        import android.os.IBinder;
-        import android.os.PersistableBundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.view.View;
-        import android.view.Window;
-        import android.view.animation.LinearInterpolator;
-        import android.widget.ImageButton;
-        import android.widget.ProgressBar;
-        import android.widget.SeekBar;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.animation.ObjectAnimator;
+import android.app.ActivityManager;
+import android.app.DialogFragment;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.IBinder;
+import android.os.PersistableBundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.google.android.gms.ads.AdRequest;
-        import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String Broadcast_PLAY_NEW_AUDIO = "com.yamilab.lullababy.PlayNewAudio";
+    public static final String Broadcast_PLAY_NEW_AUDIO = "xyz.yapapa.lullaby.PlayNewAudio";
 
     String[] data_time;
     String[] data_melody;

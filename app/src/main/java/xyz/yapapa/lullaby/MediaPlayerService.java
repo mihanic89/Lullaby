@@ -1,4 +1,4 @@
-package com.yamilab.lullababy;
+package xyz.yapapa.lullaby;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
