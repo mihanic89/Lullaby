@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Колыбельные</string>
+
+    <string name="action_settings">Настрйоки</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="melody">Выберите мелодию</string>
+
+    <string name="time">Выберите время</string>
+    <!-- -
+        This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+    <!- -->
+    <string name="banner_ad_unit_id">ca-app-pub-2888343178529026/6476936199</string>
+
+    <string-array name="time_array">
+        <item>10 минут</item>
+        <item>20 минут</item>
+        <item>30 минут</item>
+        <item>40 минут</item>
+        <item>50 минут</item>
+        <item>60 минут</item>
+        <item>∞</item>
+    </string-array>
+    <string-array name="melody_array">
+        <item>Природа #1</item>
+        <item>Природа #2</item>
+        <item>Природа #3</item>
+        <item>Водная #1</item>
+        <item>Водная #2</item>
+        <item>Классическая #1</item>
+        <item>Классическая #2</item>
+        <item>Классическая #3</item>
+        <item>Классическая #4</item>
+        <item>Классическая #5</item>
+        <item>Мобиле #1</item>
+        <item>Мобиле #2</item>
+    </string-array>
+
+</resources>
