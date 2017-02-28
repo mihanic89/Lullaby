@@ -473,33 +473,27 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
      */
     private void callStateListener() {
         // Get the telephony manager
-
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         //Starting listening for PhoneState changes
         phoneStateListener = new PhoneStateListener() {
             @Override
             public void onCallStateChanged(int state, String incomingNumber) {
-                boolean isPlaying=false;
                 switch (state) {
                     //if at least one call exists or the phone is ringing
                     //pause the MediaPlayer
                     case TelephonyManager.CALL_STATE_OFFHOOK:
                     case TelephonyManager.CALL_STATE_RINGING:
-                        if (mediaPlayer.isPlaying())
-                            isPlaying = true;
-
-                        if (mediaPlayer != null ) {
+                        if (mediaPlayer != null) {
                             pauseMedia();
                             ongoingCall = true;
                         }
                         break;
                     case TelephonyManager.CALL_STATE_IDLE:
                         // Phone idle. Start playing.
-                        if (mediaPlayer != null && isPlaying) {
+                        if (mediaPlayer != null) {
                             if (ongoingCall) {
                                 ongoingCall = false;
                                 resumeMedia();
-                                isPlaying = false;
                             }
                         }
                         break;
