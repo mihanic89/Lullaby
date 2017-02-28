@@ -615,6 +615,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             play_pauseAction = playbackAction(0);
         }
 
+        
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.image5); //replace with your own image
 
