@@ -41,8 +41,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public static final String ACTION_PLAY = "xyz.yapapa.lullaby.ACTION_PLAY";
     public static final String ACTION_PAUSE = "xyz.yapapa.lullaby.ACTION_PAUSE";
     public static final String ACTION_PREVIOUS = "xyz.yapapa.lullaby.ACTION_PREVIOUS";
-    public static final String ACTION_NEXT = "com.yamilab.lullababy.ACTION_NEXT";
-    public static final String ACTION_STOP = "com.yamilab.lullababy.ACTION_STOP";
+    public static final String ACTION_NEXT = "xyz.yapapa.lullaby.ACTION_NEXT";
+    public static final String ACTION_STOP = "xyz.yapapa.lullaby.ACTION_STOP";
 
 
     private MediaPlayer mediaPlayer;
@@ -77,6 +77,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     private AssetFileDescriptor afd;
     private InputStream ins;
 
+    private boolean isPlayed=false;
 
     /**
      * Service lifecycle methods
@@ -90,7 +91,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public void onCreate() {
         super.onCreate();
         // Perform one-time setup procedures
-
+        isPlayed = true;
         // Manage incoming phone calls during playback.
         // Pause MediaPlayer on incoming call,
         // Resume on hangup.
@@ -483,14 +484,16 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                     //pause the MediaPlayer
                     case TelephonyManager.CALL_STATE_OFFHOOK:
                     case TelephonyManager.CALL_STATE_RINGING:
-                        if (mediaPlayer != null) {
+                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                             pauseMedia();
                             ongoingCall = true;
+                            isPlayed = true;
                         }
+                        else if (isPlayed = false);
                         break;
                     case TelephonyManager.CALL_STATE_IDLE:
                         // Phone idle. Start playing.
-                        if (mediaPlayer != null) {
+                        if (mediaPlayer != null && isPlayed) {
                             if (ongoingCall) {
                                 ongoingCall = false;
                                 resumeMedia();
@@ -528,6 +531,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
         // Attach Callback to receive MediaSession updates
         mediaSession.setCallback(new MediaSessionCompat.Callback() {
+
             // Implement callbacks
             @Override
             public void onPlay() {
@@ -615,7 +619,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             play_pauseAction = playbackAction(0);
         }
 
-        
+
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.image5); //replace with your own image
 
@@ -684,8 +688,10 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         String actionString = playbackAction.getAction();
         if (actionString.equalsIgnoreCase(ACTION_PLAY)) {
             transportControls.play();
+
         } else if (actionString.equalsIgnoreCase(ACTION_PAUSE)) {
             transportControls.pause();
+
         } else if (actionString.equalsIgnoreCase(ACTION_NEXT)) {
             transportControls.skipToNext();
         } else if (actionString.equalsIgnoreCase(ACTION_PREVIOUS)) {
