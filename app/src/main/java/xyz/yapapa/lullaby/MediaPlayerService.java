@@ -38,9 +38,9 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         AudioManager.OnAudioFocusChangeListener {
 
 
-    public static final String ACTION_PLAY = "com.yamilab.lullababy.ACTION_PLAY";
-    public static final String ACTION_PAUSE = "com.yamilab.lullababy.ACTION_PAUSE";
-    public static final String ACTION_PREVIOUS = "com.yamilab.lullababy.ACTION_PREVIOUS";
+    public static final String ACTION_PLAY = "xyz.yapapa.lullaby.ACTION_PLAY";
+    public static final String ACTION_PAUSE = "xyz.yapapa.lullaby.ACTION_PAUSE";
+    public static final String ACTION_PREVIOUS = "xyz.yapapa.lullaby.ACTION_PREVIOUS";
     public static final String ACTION_NEXT = "com.yamilab.lullababy.ACTION_NEXT";
     public static final String ACTION_STOP = "com.yamilab.lullababy.ACTION_STOP";
 

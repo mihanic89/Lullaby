@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 /**
  * Created by Misha on 14.02.2017.
@@ -40,14 +39,14 @@ public  class TimePickerFragment extends DialogFragment
         TextView textTimer;
         sPref = this.getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-        timer_pick = (hourOfDay*60+ minute)*60000;
+        timer_pick = (hourOfDay*60+minute)*60000;
 
 
         set_time = String.format("%02d:%02d",hourOfDay,minute);
 
         ed.putLong("timer", timer_pick);
-        Toast.makeText(this.getActivity(),"seconds remaining: " + timer_pick/1000 ,
-               Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this.getActivity(),"seconds remaining: " + timer_pick/1000 ,
+        //       Toast.LENGTH_SHORT).show();
         textTimer = (TextView) getActivity().findViewById(R.id.textViewTimer);
         textTimer.setText(set_time);
         ed.putString("cheked_time",set_time);

@@ -21,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000 + "melody " + melodyIndex,
         //        Toast.LENGTH_SHORT).show();
-        set_time =sPref.getString("cheked_time",("00: " +"05"));
+        set_time =sPref.getString("cheked_time",("00:" +"05"));
 
 
         textMelody = (TextView) findViewById(R.id.textViewMelody);
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                player.stopPlayer();
+               player.stopPlayer();
                 cancelTimer();
                 animation.cancel();
                 progressBar.clearAnimation();
@@ -161,8 +160,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 melodyIndex--;
-                if (melodyIndex < 0) melodyIndex = 11;
+                if (melodyIndex < 0) melodyIndex = 23;
                 textMelody.setText(data_melody[melodyIndex]);
+                sPref = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putInt("melody", melodyIndex);
+                ed.commit();
                 // if( AudioManager.isMusicActive())start_lullababy();
             }
         });
@@ -172,8 +175,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 melodyIndex++;
-                if (melodyIndex > 11) melodyIndex = 0;
+                if (melodyIndex > 23) melodyIndex = 0;
                 textMelody.setText(data_melody[melodyIndex]);
+                sPref = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putInt("melody", melodyIndex);
+                ed.commit();
                 //  if(isMyServiceRunning(MediaPlayerService.class)==true)start_lullababy();
 
             }
@@ -205,6 +212,18 @@ public class MainActivity extends AppCompatActivity {
         audioList.add(new Audio(R.raw.music9,  getString(R.string.app_name),  melody[9]));
         audioList.add(new Audio(R.raw.music10,  getString(R.string.app_name),  melody[10]));
         audioList.add(new Audio(R.raw.music11,  getString(R.string.app_name),  melody[11]));
+        audioList.add(new Audio(R.raw.music12,  getString(R.string.app_name),  melody[12]));
+        audioList.add(new Audio(R.raw.music13,  getString(R.string.app_name),  melody[13]));
+        audioList.add(new Audio(R.raw.music14,  getString(R.string.app_name),  melody[14]));
+        audioList.add(new Audio(R.raw.music15,  getString(R.string.app_name),  melody[15]));
+        audioList.add(new Audio(R.raw.music16,  getString(R.string.app_name),  melody[16]));
+        audioList.add(new Audio(R.raw.music17,  getString(R.string.app_name),  melody[17]));
+        audioList.add(new Audio(R.raw.music18,  getString(R.string.app_name),  melody[18]));
+        audioList.add(new Audio(R.raw.music19,  getString(R.string.app_name),  melody[19]));
+        audioList.add(new Audio(R.raw.music20,  getString(R.string.app_name),  melody[20]));
+        audioList.add(new Audio(R.raw.music21,  getString(R.string.app_name),  melody[21]));
+        audioList.add(new Audio(R.raw.music22,  getString(R.string.app_name),  melody[22]));
+        audioList.add(new Audio(R.raw.music23,  getString(R.string.app_name),  melody[23]));
     }
 
     void start_lullababy(int  melodyIndex, long timer){
@@ -217,16 +236,17 @@ public class MainActivity extends AppCompatActivity {
         timer = sPref.getLong("timer", 200000);
         animation.setDuration(timer); //in milliseconds
         playAudio(melodyIndex);
+
         startTimer(timer);
-        Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000,
-                Toast.LENGTH_SHORT).show();
+       // Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000,
+        //        Toast.LENGTH_SHORT).show();
         animation.start();
     }
 
     void startTimer(long time) {
 
-        Toast.makeText(MainActivity.this,"seconds remaining: " + time / 1000,
-                Toast.LENGTH_SHORT).show();
+       // Toast.makeText(MainActivity.this,"seconds remaining: " + time / 1000,
+        //        Toast.LENGTH_SHORT).show();
 
         cTimer = new CountDownTimer(time, 1000) {
 
