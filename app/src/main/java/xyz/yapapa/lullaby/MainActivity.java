@@ -28,6 +28,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
+import static xyz.yapapa.lullaby.R.id.adView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     CountDownTimer cTimer = null;
 
     SharedPreferences sPref;
-
+    private AdView mAdView;
     private MediaPlayerService player;
     boolean serviceBound = false;
 
@@ -68,21 +70,16 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-
-
 
         loadAudio();
         //реклама
         // Load an ad into the AdMob banner view.
 
-        AdView adView = (AdView) findViewById(R.id.adView);
+        mAdView = (AdView) findViewById(adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("09D7B5315C60A80D280B8CDF618FD3DE")
                 .build();
-        adView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);
 
 
         sPref = getPreferences(MODE_PRIVATE);
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000 + "melody " + melodyIndex,
         //        Toast.LENGTH_SHORT).show();
-        set_time =sPref.getString("cheked_time",("00:" +"05"));
+        set_time = sPref.getString("cheked_time", ("00:" + "05"));
 
 
         textMelody = (TextView) findViewById(R.id.textViewMelody);
@@ -116,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
         textTimer.setText(set_time);
 
 
-
-
-
-
         //анимация
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         animation = ObjectAnimator.ofInt(progressBar, "progress", 500, 0); //
@@ -132,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start_lullababy(melodyIndex,timer);
+                start_lullababy(melodyIndex, timer);
 
                 /*
                 cancelTimer();
@@ -154,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stop_lullababy ();
+                stop_lullababy();
 
             }
         });
@@ -199,38 +192,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadAudio() {
-        String [] melody;
+        String[] melody;
         Resources res = getResources();
         melody = res.getStringArray(R.array.melody_array);
         audioList = new ArrayList<>();
 
-        audioList.add(new Audio(R.raw.music0,  getString(R.string.app_name),  melody[0]));
-        audioList.add(new Audio(R.raw.music1,  getString(R.string.app_name),  melody[1]));
-        audioList.add(new Audio(R.raw.music2,  getString(R.string.app_name),  melody[2]));
-        audioList.add(new Audio(R.raw.music3,  getString(R.string.app_name),  melody[3]));
-        audioList.add(new Audio(R.raw.music4,  getString(R.string.app_name),  melody[4]));
-        audioList.add(new Audio(R.raw.music5,  getString(R.string.app_name),  melody[5]));
-        audioList.add(new Audio(R.raw.music6,  getString(R.string.app_name),  melody[6]));
-        audioList.add(new Audio(R.raw.music7,  getString(R.string.app_name),  melody[7]));
-        audioList.add(new Audio(R.raw.music8,  getString(R.string.app_name),  melody[8]));
-        audioList.add(new Audio(R.raw.music9,  getString(R.string.app_name),  melody[9]));
-        audioList.add(new Audio(R.raw.music10,  getString(R.string.app_name),  melody[10]));
-        audioList.add(new Audio(R.raw.music11,  getString(R.string.app_name),  melody[11]));
-        audioList.add(new Audio(R.raw.music12,  getString(R.string.app_name),  melody[12]));
-        audioList.add(new Audio(R.raw.music13,  getString(R.string.app_name),  melody[13]));
-        audioList.add(new Audio(R.raw.music14,  getString(R.string.app_name),  melody[14]));
-        audioList.add(new Audio(R.raw.music15,  getString(R.string.app_name),  melody[15]));
-        audioList.add(new Audio(R.raw.music16,  getString(R.string.app_name),  melody[16]));
-        audioList.add(new Audio(R.raw.music17,  getString(R.string.app_name),  melody[17]));
-        audioList.add(new Audio(R.raw.music18,  getString(R.string.app_name),  melody[18]));
-        audioList.add(new Audio(R.raw.music19,  getString(R.string.app_name),  melody[19]));
-        audioList.add(new Audio(R.raw.music20,  getString(R.string.app_name),  melody[20]));
-        audioList.add(new Audio(R.raw.music21,  getString(R.string.app_name),  melody[21]));
-        audioList.add(new Audio(R.raw.music22,  getString(R.string.app_name),  melody[22]));
-        audioList.add(new Audio(R.raw.music23,  getString(R.string.app_name),  melody[23]));
+        audioList.add(new Audio(R.raw.music0, getString(R.string.app_name), melody[0]));
+        audioList.add(new Audio(R.raw.music1, getString(R.string.app_name), melody[1]));
+        audioList.add(new Audio(R.raw.music2, getString(R.string.app_name), melody[2]));
+        audioList.add(new Audio(R.raw.music3, getString(R.string.app_name), melody[3]));
+        audioList.add(new Audio(R.raw.music4, getString(R.string.app_name), melody[4]));
+        audioList.add(new Audio(R.raw.music5, getString(R.string.app_name), melody[5]));
+        audioList.add(new Audio(R.raw.music6, getString(R.string.app_name), melody[6]));
+        audioList.add(new Audio(R.raw.music7, getString(R.string.app_name), melody[7]));
+        audioList.add(new Audio(R.raw.music8, getString(R.string.app_name), melody[8]));
+        audioList.add(new Audio(R.raw.music9, getString(R.string.app_name), melody[9]));
+        audioList.add(new Audio(R.raw.music10, getString(R.string.app_name), melody[10]));
+        audioList.add(new Audio(R.raw.music11, getString(R.string.app_name), melody[11]));
+        audioList.add(new Audio(R.raw.music12, getString(R.string.app_name), melody[12]));
+        audioList.add(new Audio(R.raw.music13, getString(R.string.app_name), melody[13]));
+        audioList.add(new Audio(R.raw.music14, getString(R.string.app_name), melody[14]));
+        audioList.add(new Audio(R.raw.music15, getString(R.string.app_name), melody[15]));
+        audioList.add(new Audio(R.raw.music16, getString(R.string.app_name), melody[16]));
+        audioList.add(new Audio(R.raw.music17, getString(R.string.app_name), melody[17]));
+        audioList.add(new Audio(R.raw.music18, getString(R.string.app_name), melody[18]));
+        audioList.add(new Audio(R.raw.music19, getString(R.string.app_name), melody[19]));
+        audioList.add(new Audio(R.raw.music20, getString(R.string.app_name), melody[20]));
+        audioList.add(new Audio(R.raw.music21, getString(R.string.app_name), melody[21]));
+        audioList.add(new Audio(R.raw.music22, getString(R.string.app_name), melody[22]));
+        audioList.add(new Audio(R.raw.music23, getString(R.string.app_name), melody[23]));
     }
 
-    void start_lullababy(int  melodyIndex, long timer){
+    void start_lullababy(int melodyIndex, long timer) {
         progressBar.setVisibility(View.VISIBLE);
         cancelTimer();
         animation.cancel();
@@ -242,13 +235,15 @@ public class MainActivity extends AppCompatActivity {
         playAudio(melodyIndex);
 
         startTimer(timer);
-       // Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000,
+        // Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000,
         //        Toast.LENGTH_SHORT).show();
         animation.start();
     }
 
-    void stop_lullababy (){
-        player.stopPlayer();
+    void stop_lullababy() {
+        if (player != null) {
+            player.stopPlayer();
+        }
         cancelTimer();
         animation.cancel();
         progressBar.clearAnimation();
@@ -258,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
     void startTimer(long time) {
 
-       // Toast.makeText(MainActivity.this,"seconds remaining: " + time / 1000,
+        // Toast.makeText(MainActivity.this,"seconds remaining: " + time / 1000,
         //        Toast.LENGTH_SHORT).show();
 
         cTimer = new CountDownTimer(time, 1000) {
@@ -329,6 +324,28 @@ public class MainActivity extends AppCompatActivity {
             //service is active
             player.stopSelf();
         }
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
     }
 
     private void playAudio(int audioIndex) {
@@ -365,13 +382,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setBtnPlay(){
-        btnStart.setImageResource(android.R.drawable.ic_media_play);
 
-    }
 
-    public void setBtnPause(){
-        btnStart.setImageResource(android.R.drawable.ic_media_pause);
-    }
+
 }
 

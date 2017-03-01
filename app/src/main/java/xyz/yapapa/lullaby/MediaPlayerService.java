@@ -15,6 +15,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.session.MediaSessionManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.media.MediaMetadataCompat;
@@ -124,7 +125,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         }
 
         //Request audio focus
-        if (requestAudioFocus() == true) {
+        if (requestAudioFocus()) {
             if (mediaSessionManager == null) {
                 try {
                     initMediaSession();
@@ -382,7 +383,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     }
 
     private void playMedia() {
-        if (!mediaPlayer.isPlaying()&&requestAudioFocus()==true) {
+        if (!mediaPlayer.isPlaying()&& requestAudioFocus()) {
             mediaPlayer.start();
 
         }
@@ -491,7 +492,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                             ongoingCall = true;
                             isPlayed = true;
                         }
-                        else if (isPlayed = false);
+                        else isPlayed = false;
                         break;
                     case TelephonyManager.CALL_STATE_IDLE:
                         // Phone idle. Start playing.
@@ -517,7 +518,9 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     private void initMediaSession() throws RemoteException {
         if (mediaSessionManager != null) return; //mediaSessionManager exists
 
-        mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+        }
         // Create a new MediaSession
         mediaSession = new MediaSessionCompat(getApplicationContext(), "AudioPlayer");
         //Get MediaSessions transport controls

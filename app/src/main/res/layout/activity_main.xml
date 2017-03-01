@@ -1,10 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context="xyz.yapapa.lullaby.MainActivity">
+
 
 
     <!-- view for AdMob Banner Ad -->
@@ -14,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="SMART_BANNER"
+        ads:adSize="FLUID"
         ads:adUnitId="@string/banner_ad_unit_id" />
 
     <LinearLayout
@@ -45,7 +47,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="@dimen/activity_vertical_margin"
             tools:text="12:12"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorAccent"
             android:textSize="40sp"
             android:onClick="showTimePickerDialog"/>
 
@@ -68,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp">
+            >
 
 
             <ProgressBar
