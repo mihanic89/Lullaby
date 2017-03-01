@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,7 +45,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public static final String ACTION_NEXT = "xyz.yapapa.lullaby.ACTION_NEXT";
     public static final String ACTION_STOP = "xyz.yapapa.lullaby.ACTION_STOP";
 
-
+    private  SharedPreferences sPref;
     private MediaPlayer mediaPlayer;
 
     //MediaSession
@@ -383,6 +384,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     private void playMedia() {
         if (!mediaPlayer.isPlaying()&&requestAudioFocus()==true) {
             mediaPlayer.start();
+
         }
     }
 
@@ -649,6 +651,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
                 //.addAction(android.R.drawable.ic_media_next, "next", playbackAction(2));
 
         ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).notify(NOTIFICATION_ID, notificationBuilder.build());
+
+
     }
 
 

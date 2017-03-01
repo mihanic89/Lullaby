@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -59,12 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Audio> audioList;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+
+
 
         loadAudio();
         //реклама
@@ -119,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         animation.setInterpolator(new LinearInterpolator());
         //animation.start();
 
-        btnStart = (ImageButton) findViewById(R.id.btnStart);
+        btnStart = (ImageButton) findViewById(R.id.play_pause);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,12 +154,8 @@ public class MainActivity extends AppCompatActivity {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               player.stopPlayer();
-                cancelTimer();
-                animation.cancel();
-                progressBar.clearAnimation();
-                progressBar.setVisibility(View.INVISIBLE);
-                cancelTimer();
+                stop_lullababy ();
+
             }
         });
 
@@ -241,6 +245,15 @@ public class MainActivity extends AppCompatActivity {
        // Toast.makeText(MainActivity.this,"seconds remaining: " + timer / 1000,
         //        Toast.LENGTH_SHORT).show();
         animation.start();
+    }
+
+    void stop_lullababy (){
+        player.stopPlayer();
+        cancelTimer();
+        animation.cancel();
+        progressBar.clearAnimation();
+        progressBar.setVisibility(View.INVISIBLE);
+        cancelTimer();
     }
 
     void startTimer(long time) {

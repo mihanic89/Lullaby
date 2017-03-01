@@ -14,7 +14,7 @@
         This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638
     <!- -->
-    <string name="banner_ad_unit_id">ca-app-pub-2888343178529026/6476936199</string>
+    <string name="banner_ad_unit_id">ca-app-pub-2888343178529026/2666399790</string>
 
     <string-array name="time_array">
         <item>10 minutes</item>

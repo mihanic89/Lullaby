@@ -76,7 +76,7 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:layout_alignStart="@+id/btnStart"
+                android:layout_alignStart="@+id/play_pause"
                 android:layout_centerHorizontal="true"
                 android:max="500"
                 android:progress="0"
@@ -89,16 +89,20 @@
                 android:layout_height="72dp"
                 android:background="@drawable/circularbutton"
                 android:scaleType="centerCrop"
+                android:tint="@color/colorAccent"
+                android:backgroundTint="@color/icons"
                 ads:srcCompat="@android:drawable/ic_media_previous"
                 android:contentDescription="btnPrevious" />
 
             <ImageButton
-                android:id="@+id/btnStart"
+                android:id="@+id/play_pause"
                 android:layout_width="72dp"
                 ads:srcCompat="@android:drawable/ic_media_play"
                 android:layout_height="72dp"
                 android:layout_toEndOf="@+id/btnPrevious"
                 android:background="@drawable/circularbutton"
+                android:tint="@color/colorAccent"
+                android:backgroundTint="@color/icons"
                 android:scaleType="centerCrop"
                 android:clickable="true"
                 style="@style/Widget.AppCompat.Button.Colored"
@@ -108,8 +112,10 @@
                 android:layout_width="72dp"
                 ads:srcCompat="@android:drawable/ic_media_pause"
                 android:layout_height="72dp"
-                android:layout_toEndOf="@+id/btnStart"
+                android:layout_toEndOf="@+id/play_pause"
                 android:background="@drawable/circularbutton"
+                android:tint="@color/colorAccent"
+                android:backgroundTint="@color/icons"
                 android:scaleType="centerCrop"
                 android:clickable="true"
                 />
@@ -121,6 +127,8 @@
                 android:layout_height="72dp"
                 android:layout_toEndOf="@+id/btnStop"
                 android:background="@drawable/circularbutton"
+                android:tint="@color/colorAccent"
+                android:backgroundTint="@color/icons"
                 android:scaleType="centerCrop"
                 ads:srcCompat="@android:drawable/ic_media_next" />
 
