@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
         if (mAdView != null) {
             mAdView.destroy();
         }
-        
+
     }
 
     /** Called when leaving the activity */
