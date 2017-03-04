@@ -99,7 +99,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         // Manage incoming phone calls during playback.
         // Pause MediaPlayer on incoming call,
         // Resume on hangup.
-        callStateListener();
+        //callStateListener();
         //ACTION_AUDIO_BECOMING_NOISY -- change in audio outputs -- BroadcastReceiver
         registerBecomingNoisyReceiver();
         //Listen for new Audio to play -- BroadcastReceiver
@@ -265,10 +265,16 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         switch (focusState) {
             case AudioManager.AUDIOFOCUS_GAIN:
                 // resume playback
-                if (mediaPlayer == null) initMediaPlayer();
-                else if (!mediaPlayer.isPlaying()) resumeMedia();
+                if (mediaPlayer == null) {
+                    initMediaPlayer();
+                    buildNotification ( PlaybackStatus.PLAYING);
+                }
+                else if (!mediaPlayer.isPlaying()) {
+                    resumeMedia();
+                    buildNotification ( PlaybackStatus.PLAYING);
+                }
                 mediaPlayer.setVolume(1.0f, 1.0f);
-                buildNotification ( PlaybackStatus.PLAYING);
+
                 break;
              /*
                 if (mediaPlayer == null && !mediaPlayer.isPlaying()) mediaPlayer.start();// initMediaPlayer();
