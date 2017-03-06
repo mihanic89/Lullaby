@@ -5,9 +5,9 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "xyz.yapapa.lullaby"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 24
-        versionCode 1
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
