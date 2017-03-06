@@ -136,5 +136,13 @@
 
 
         </RelativeLayout>
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_vertical_margin"
+            android:id="@+id/addMelody"
+            style="@style/Widget.AppCompat.Button.Colored" />
     </LinearLayout>
 </RelativeLayout>

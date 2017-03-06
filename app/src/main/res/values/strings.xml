@@ -8,13 +8,16 @@
     <string name="melody">Choose melody</string>
 
     <string name="time">Choose time</string>
-
-
+    <string name="noVideo">No video, try later!</string>
+    <string name="addMelody">add melody:</string>
+    <string name="askAddMelody">Add melody</string>
+    <string name="thank_dev">Thank developers\n(watch video)</string>
     <!-- -
         This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638
     <!- -->
     <string name="banner_ad_unit_id">ca-app-pub-2888343178529026/2666399790</string>
+    <string name="ad_unit_id">ca-app-pub-2888343178529026/8017942590</string>
 
     <string-array name="time_array">
         <item>10 minutes</item>

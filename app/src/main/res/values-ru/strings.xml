@@ -10,6 +10,11 @@
     <string name="melody">Выберите мелодию</string>
 
     <string name="time">Выберите время</string>
+
+    <string name="noVideo">Нет видео, попробуйте позже</string>
+    <string name="addMelody">Добавлена мелодия:</string>
+    <string name="askAddMelody">Добавить мелодию</string>
+    <string name="thank_dev">Спасибо разработчикам \n(посмотреть видео) </string>
     <!-- -
         This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638

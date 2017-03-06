@@ -17,13 +17,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
@@ -31,7 +37,7 @@ import java.util.ArrayList;
 import static xyz.yapapa.lullaby.R.id.adView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RewardedVideoAdListener {
 
     public static final String Broadcast_PLAY_NEW_AUDIO = "xyz.yapapa.lullaby.PlayNewAudio";
 
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ObjectAnimator animation;
 
-    private int melodyIndex, defValue = 0;
+    private int melodyIndex, defValue = 0, totalMelodyCounter=0;
 
     private long timer;
 
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sPref;
     private AdView mAdView;
+    private RewardedVideoAd mAd;
     private MediaPlayerService player;
     boolean serviceBound = false;
 
@@ -69,9 +76,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        sPref = getPreferences(MODE_PRIVATE);
+        totalMelodyCounter = sPref.getInt("totalMelodyCounter", 19);
 
 
         loadAudio();
+        // Use an activity context to get the rewarded video instance.
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        mAd.setRewardedVideoAdListener(this);
+        loadRewardedVideoAd();
+
+        Button btnAddMelody = (Button) findViewById(R.id.addMelody);
+
+        if ( audioList.size()< 24) {
+            btnAddMelody.setText(getString(R.string.askAddMelody));
+        } else {
+            btnAddMelody.setText(getString(R.string.thank_dev));
+        }
+
+        btnAddMelody.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if (mAd.isLoaded()) {
+                                                    mAd.show();
+                                                }
+                                                else {
+                                                    Toast.makeText(MainActivity.this,getString(R.string.noVideo),
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+
+
         //реклама
         // Load an ad into the AdMob banner view.
 
@@ -82,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
 
-        sPref = getPreferences(MODE_PRIVATE);
+
 
 
         // SharedPreferences.Editor ed = sPref.edit();
@@ -157,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 melodyIndex--;
-                if (melodyIndex < 0) melodyIndex = 23;
+                if (melodyIndex < 0) melodyIndex = audioList.size()-1;
                 textMelody.setText(data_melody[melodyIndex]);
                 sPref = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor ed = sPref.edit();
@@ -172,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 melodyIndex++;
-                if (melodyIndex > 23) melodyIndex = 0;
+                if (melodyIndex > (audioList.size()-1)) melodyIndex = 0;
                 textMelody.setText(data_melody[melodyIndex]);
                 sPref = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor ed = sPref.edit();
@@ -195,8 +231,11 @@ public class MainActivity extends AppCompatActivity {
         String[] melody;
         Resources res = getResources();
         melody = res.getStringArray(R.array.melody_array);
-        audioList = new ArrayList<>();
+        sPref = getPreferences(MODE_PRIVATE);
+        totalMelodyCounter = sPref.getInt("totalMelodyCounter", 19);
+        //Toast.makeText(this, "totalMelodyCounter=" + totalMelodyCounter, Toast.LENGTH_SHORT).show();
 
+        audioList = new ArrayList<>();
         audioList.add(new Audio(R.raw.music0, getString(R.string.app_name), melody[0]));
         audioList.add(new Audio(R.raw.music1, getString(R.string.app_name), melody[1]));
         audioList.add(new Audio(R.raw.music2, getString(R.string.app_name), melody[2]));
@@ -216,11 +255,19 @@ public class MainActivity extends AppCompatActivity {
         audioList.add(new Audio(R.raw.music16, getString(R.string.app_name), melody[16]));
         audioList.add(new Audio(R.raw.music17, getString(R.string.app_name), melody[17]));
         audioList.add(new Audio(R.raw.music18, getString(R.string.app_name), melody[18]));
-        audioList.add(new Audio(R.raw.music19, getString(R.string.app_name), melody[19]));
-        audioList.add(new Audio(R.raw.music20, getString(R.string.app_name), melody[20]));
-        audioList.add(new Audio(R.raw.music21, getString(R.string.app_name), melody[21]));
+        if (totalMelodyCounter >19)
+         audioList.add(new Audio(R.raw.music19, getString(R.string.app_name), melody[19]));
+
+        if (totalMelodyCounter >20)
+         audioList.add(new Audio(R.raw.music20, getString(R.string.app_name), melody[20]));
+        if (totalMelodyCounter >21)
+         audioList.add(new Audio(R.raw.music21, getString(R.string.app_name), melody[21]));
+        if (totalMelodyCounter >22)
         audioList.add(new Audio(R.raw.music22, getString(R.string.app_name), melody[22]));
-        audioList.add(new Audio(R.raw.music23, getString(R.string.app_name), melody[23]));
+        if (totalMelodyCounter >23)
+         audioList.add(new Audio(R.raw.music23, getString(R.string.app_name), melody[23]));
+
+      //  Toast.makeText(this, "audioList.size()=" + audioList.size(), Toast.LENGTH_SHORT).show();
     }
 
     void start_lullababy(int melodyIndex, long timer) {
@@ -316,9 +363,84 @@ public class MainActivity extends AppCompatActivity {
         serviceBound = savedInstanceState.getBoolean("serviceStatus");
     }
 
+
+    private void loadRewardedVideoAd() {
+        mAd.loadAd(getString(R.string.ad_unit_id), new AdRequest.Builder().build());
+    }
+
+
+    public void onRewarded(RewardItem reward) {
+        String[] melody;
+        Resources res = getResources();
+        melody = res.getStringArray(R.array.melody_array);
+
+        if ( audioList.size()< 25) {
+            switch (audioList.size()){
+                case 20:
+                     audioList.add(new Audio(R.raw.music19, getString(R.string.app_name), melody[19]));
+                    break;
+                case 21:
+                     audioList.add(new Audio(R.raw.music20, getString(R.string.app_name), melody[20]));
+                    break;
+                case 22:
+                    audioList.add(new Audio(R.raw.music21, getString(R.string.app_name), melody[21]));
+                    break;
+                case 23:
+                    audioList.add(new Audio(R.raw.music22, getString(R.string.app_name), melody[22]));
+                    break;
+                case 24:
+                    audioList.add(new Audio(R.raw.music23, getString(R.string.app_name), melody[23]));
+                    Button btnAddMelody = (Button) findViewById(R.id.addMelody);
+                    btnAddMelody.setText(getString(R.string.thank_dev));
+                    break;
+
+
+
+            }
+
+       // Toast.makeText(this, getString(R.string.addMelody) + melody[audioList.size()-1], Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putInt("totalMelodyCounter", audioList.size());
+            ed.commit();
+        }
+    }
+
+
+    public void onRewardedVideoAdLeftApplication() {
+        //Toast.makeText(this, "onRewardedVideoAdLeftApplication",
+        //        Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void onRewardedVideoAdClosed() {
+       // Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void onRewardedVideoAdFailedToLoad(int errorCode) {
+        //Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void onRewardedVideoAdLoaded() {
+       // Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void onRewardedVideoAdOpened() {
+       // Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void onRewardedVideoStarted() {
+      //  Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+    }
+
+
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        mAd.destroy(this);
+
         if (serviceBound) {
             unbindService(serviceConnection);
             //service is active
@@ -327,12 +449,13 @@ public class MainActivity extends AppCompatActivity {
         if (mAdView != null) {
             mAdView.destroy();
         }
-
+        super.onDestroy();
     }
 
     /** Called when leaving the activity */
     @Override
     public void onPause() {
+        mAd.pause(this);
         if (mAdView != null) {
             mAdView.pause();
         }
@@ -342,10 +465,11 @@ public class MainActivity extends AppCompatActivity {
     /** Called when returning to the activity */
     @Override
     public void onResume() {
-        super.onResume();
+        mAd.resume(this);
         if (mAdView != null) {
             mAdView.resume();
         }
+        super.onResume();
     }
 
     private void playAudio(int audioIndex) {
