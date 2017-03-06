@@ -398,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements RewardedVideoAdLi
 
             }
 
-       // Toast.makeText(this, getString(R.string.addMelody) + melody[audioList.size()-1], Toast.LENGTH_SHORT).show();
+           Toast.makeText(this, getString(R.string.addMelody) + melody[audioList.size()-1], Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor ed = sPref.edit();
             ed.putInt("totalMelodyCounter", audioList.size());
             ed.commit();
